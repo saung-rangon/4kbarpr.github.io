@@ -2028,8 +2028,10 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 /* ]]> */
 </script>
 
-<script>
-	window.addCommentEntry = function(row) {
+<script>(function() {
+	const base_url = 'https://yusee.fly.dev'
+
+	function addCommentEntry(row) {
 		const li = document.createElement('li')
 		li.className ="comment even thread-even depth-1 cui-item-comment";
 		document.querySelector('#cui-container-comment-73263').append(li)
@@ -2085,19 +2087,21 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 			</div><!--.cui-comment-->`;
 	}
 
-	addEventListener('DOMContentLoaded', e => { setTimeout(_=> {
+	addEventListener('DOMContentLoaded', e => { setTimeout(async _=> {
 		let qs = new URLSearchParams(location.search)
 		let btn, title, alamat, nama = qs.get('to')
 
 		if (nama) {
-			title = '<?= $invite['title'] ?? 'Bapak/Ibu/Saudara/i' ?>'
-			alamat = '<?= $invite['alamat'] ?? 'Tempat' ?>'
+			const invite = await fetch(base_url +'/site/get-invite').then(r => r.json())
+			title = invite.title || 'Bapak/Ibu/Saudara/i'
+			alamat = invite.alamat || 'Tempat'
 		}
+
 		document.querySelector('#titletamu').innerHTML = title
 		document.querySelector('#namatamu').innerHTML = nama
 		document.querySelector('#alamat').innerHTML = `di ${alamat}.`
 
-		fetch('<?= Url::base() ?>/site/get-comments').then(r => r.json()).then(data => data.map(addCommentEntry));
+		fetch(base_url +'/site/get-comments').then(r => r.json()).then(data => data.map(addCommentEntry));
 
 		(btn = document.querySelector('#submit-comment')).addEventListener('click', e => {
 			e.preventDefault()
@@ -2113,7 +2117,7 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 
 			document.querySelector('.elementor-field-group-jumlahhadir').style.display = 'none'
 
-			return !fetch('<?= Url::base() ?>/site/post-comment', {
+			return !fetch(base_url +'/site/post-comment', {
 				headers: {'content-type': 'application/x-www-form-urlencoded'},
 				body: 'body='+ body, method: 'post',
 			})
@@ -2134,11 +2138,9 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 			})
 		})
 	}, 3000) })
-</script>
+})()</script>
 
 <script type='text/javascript' src='js/frontend.min7d4c.js?ver=1.7.0' id='wpforms-elementor-js'></script>
 <div class="pafe-break-point" data-pafe-break-point-md="768" data-pafe-break-point-lg="1025" data-pafe-ajax-url="https://ruanginvitation.id/wp-admin/admin-ajax.php"></div><div data-pafe-form-builder-tinymce-upload="https://ruanginvitation.id/wp-content/plugins/piotnet-addons-for-elementor-pro/inc/tinymce/tinymce-upload.php"></div><div data-pafe-ajax-url="https://ruanginvitation.id/wp-admin/admin-ajax.php"></div>
 </body>
-
-<!-- Mirrored from ruanginvitation.id/ri12-spesial/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Apr 2023 21:14:55 GMT -->
 </html>
