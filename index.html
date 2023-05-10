@@ -2029,6 +2029,8 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 </script>
 
 <script>(function() {
+	const origFetch = window.fetch
+	const fetch = (u, o) => origFetch(u +'?s=akbarp', o)
 	const base_url = 'https://yusee.fly.dev'
 
 	function addCommentEntry(row) {
