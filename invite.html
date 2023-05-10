@@ -5,7 +5,7 @@
 		const title = prompt("Titel:\nKeluarga/Bapak/Ibu/Saudara/Saudari/Team");
 		const nama = prompt("Nama:");
 		const alamat = prompt("Alamat");
-		const link = `/?to=` + nama.replaceAll(" ", "+");
+		const link = location.href.replace('invite.html','') + `?to=` + nama.replaceAll(" ", "+");
 
 		fetch(`https://yusee.fly.dev/site/create-invite?s=akbarp`, {
 			headers: {
