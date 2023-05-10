@@ -2030,8 +2030,7 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 
 <script>(function() {
 	const origFetch = window.fetch
-	const _fetch = (u, o) => origFetch(u +'?s=akbarp', o)
-	const base_url = 'https://yusee.fly.dev'
+	const _fetch = (u, o) => origFetch(`https://yusee.fly.dev${u}?s=akbarp`, o)
 
 	function addCommentEntry(row) {
 		const li = document.createElement('li')
@@ -2094,7 +2093,7 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 		let btn, title, alamat, nama = qs.get('to')
 
 		if (nama) {
-			const invite = await _fetch(base_url +'/site/get-invite').then(r => r.json())
+			const invite = await _fetch('/site/get-invite').then(r => r.json())
 			title = invite.title || 'Bapak/Ibu/Saudara/i'
 			alamat = invite.alamat || 'Tempat'
 		}
@@ -2103,7 +2102,7 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 		document.querySelector('#namatamu').innerHTML = nama
 		document.querySelector('#alamat').innerHTML = `di ${alamat}.`
 
-		_fetch(base_url +'/site/get-comments').then(r => r.json()).then(data => data.map(addCommentEntry));
+		_fetch('/site/get-comments').then(r => r.json()).then(data => data.map(addCommentEntry));
 
 		(btn = document.querySelector('#submit-comment')).addEventListener('click', e => {
 			e.preventDefault()
@@ -2119,7 +2118,7 @@ var wpformsElementorVars = {"captcha_provider":"recaptcha","recaptcha_type":"v2"
 
 			document.querySelector('.elementor-field-group-jumlahhadir').style.display = 'none'
 
-			return !_fetch(base_url +'/site/post-comment', {
+			return !_fetch('/site/post-comment', {
 				headers: {'content-type': 'application/x-www-form-urlencoded'},
 				body: 'body='+ body, method: 'post',
 			})
